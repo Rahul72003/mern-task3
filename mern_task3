@@ -1,0 +1,48 @@
+import React, { useState } from "react";
+
+interface ColorPickerProps {
+  colors: string[];
+}
+
+const ColorPicker: React.FC<ColorPickerProps> = ({ colors }) => {
+  const [showColorList, setShowColorList] = useState(false);
+  const [selectedColor, setSelectedColor] = useState("");
+
+  const handleButtonClick = () => {
+    setShowColorList(!showColorList);
+  };
+
+  const handleColorClick = (color: string) => {
+    setSelectedColor(color);
+    setShowColorList(false);
+  };
+
+  return (
+    <div className="color-picker">
+      <button className="btn btn-primary" onClick={handleButtonClick}>
+        Pick a color
+      </button>
+      {showColorList && (
+        <ul className="color-list">
+          {colors.map((color: string, index: number) => (
+            <li
+              key={index}
+              style={{ backgroundColor: color }}
+              onClick={() => handleColorClick(color)}
+            ></li>
+          ))}
+        </ul>
+      )}
+      {selectedColor && (
+        <div className="selected-color">
+          Selected color:{" "}
+          <span style={{ backgroundColor: selectedColor }}>
+            {selectedColor}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ColorPicker;
